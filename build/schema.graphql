@@ -15,8 +15,8 @@ type Token @entity {
   # collections: BigInt!
 
   # Sender of Token
-  addressFrom: String!
+  addressFrom: Bytes!
 
   # Receiver of Token
-  addressTo: String!
+  addressTo: Bytes!
 }

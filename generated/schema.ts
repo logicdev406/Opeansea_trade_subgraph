@@ -18,8 +18,8 @@ export class Token extends Entity {
 
     this.set("hash", Value.fromBytes(Bytes.empty()));
     this.set("blockNumber", Value.fromBigInt(BigInt.zero()));
-    this.set("addressFrom", Value.fromString(""));
-    this.set("addressTo", Value.fromString(""));
+    this.set("addressFrom", Value.fromBytes(Bytes.empty()));
+    this.set("addressTo", Value.fromBytes(Bytes.empty()));
   }
 
   save(): void {
@@ -65,21 +65,21 @@ export class Token extends Entity {
     this.set("blockNumber", Value.fromBigInt(value));
   }
 
-  get addressFrom(): string {
+  get addressFrom(): Bytes {
     let value = this.get("addressFrom");
-    return value!.toString();
+    return value!.toBytes();
   }
 
-  set addressFrom(value: string) {
-    this.set("addressFrom", Value.fromString(value));
+  set addressFrom(value: Bytes) {
+    this.set("addressFrom", Value.fromBytes(value));
   }
 
-  get addressTo(): string {
+  get addressTo(): Bytes {
     let value = this.get("addressTo");
-    return value!.toString();
+    return value!.toBytes();
   }
 
-  set addressTo(value: string) {
-    this.set("addressTo", Value.fromString(value));
+  set addressTo(value: Bytes) {
+    this.set("addressTo", Value.fromBytes(value));
   }
 }
