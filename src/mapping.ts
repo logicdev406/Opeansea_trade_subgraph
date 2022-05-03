@@ -1,15 +1,16 @@
 import {
   OwnershipTransferred as OwnershipTransferredEvent,
+  OrdersMatched as OrdersMatchedEvent,
   Token as TokenContract,
 } from "../generated/Token/Token";
 
-import { Token } from "../generated/schema";
+import { Token, OrdersMatched } from "../generated/schema";
 
-export function handleTransfer(event: OwnershipTransferredEvent): void {
-  let token = Token.load(event.transaction.hash.toString());
+export function handleOwnershipTransferred(event: OwnershipTransferredEvent): void {
+  let token = Token.load(event.transaction.hash.toHex());
   if (token == null) {
-    token = new Token(event.transaction.hash.toString());
-    token.id = event.transaction.hash.toString();
+    token = new Token(event.transaction.hash.toHex());
+    token.id = event.transaction.hash.toHex();
     token.blockNumber = event.block.number;
     token.hash = event.transaction.hash;
     token.addressFrom = event.params.previousOwner;
@@ -21,4 +22,21 @@ export function handleTransfer(event: OwnershipTransferredEvent): void {
     // token.contentURI = tokenContract.tokenURI(event.params.tokenId);
   }
   token.save();
+}
+
+export function handleOrdersMatched(event: OrdersMatchedEvent): void {
+  let order = OrdersMatched.load(event.transaction.hash.toHex())
+  if (order == null) {
+    order = new OrdersMatched(event.transaction.hash.toHex())
+    order.id = event.transaction.hash.toHex()
+    order.blockNumber = event.block.number
+    order.buyHash = event.params.buyHash.toHex()
+    order.sellHash = event.params.sellHash.toHex()
+    order.maker = event.params.maker
+    order.taker = event.params.taker
+    order.price = event.params.price
+    order.metadata = event.params.metadata
+  }
+
+  order.save()
 }

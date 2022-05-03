@@ -20,3 +20,29 @@ type Token @entity {
   # Receiver of Token
   addressTo: Bytes!
 }
+
+type OrdersMatched @entity {
+  # Transaction hash
+  id: ID!
+
+  # Block number
+  blockNumber: BigInt!
+
+  # Buyer hash
+  buyHash: String!
+
+  # Seller hash
+  sellHash: String!
+
+  # Maker address
+  maker: Bytes!
+
+  # Taker address
+  taker: Bytes!
+
+  # Price
+  price: BigInt!
+
+  # Metadata
+  metadata: Bytes!
+}

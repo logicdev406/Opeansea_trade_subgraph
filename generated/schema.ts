@@ -83,3 +83,106 @@ export class Token extends Entity {
     this.set("addressTo", Value.fromBytes(value));
   }
 }
+
+export class OrdersMatched extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("blockNumber", Value.fromBigInt(BigInt.zero()));
+    this.set("buyHash", Value.fromString(""));
+    this.set("sellHash", Value.fromString(""));
+    this.set("maker", Value.fromBytes(Bytes.empty()));
+    this.set("taker", Value.fromBytes(Bytes.empty()));
+    this.set("price", Value.fromBigInt(BigInt.zero()));
+    this.set("metadata", Value.fromBytes(Bytes.empty()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save OrdersMatched entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type OrdersMatched must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("OrdersMatched", id.toString(), this);
+    }
+  }
+
+  static load(id: string): OrdersMatched | null {
+    return changetype<OrdersMatched | null>(store.get("OrdersMatched", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get blockNumber(): BigInt {
+    let value = this.get("blockNumber");
+    return value!.toBigInt();
+  }
+
+  set blockNumber(value: BigInt) {
+    this.set("blockNumber", Value.fromBigInt(value));
+  }
+
+  get buyHash(): string {
+    let value = this.get("buyHash");
+    return value!.toString();
+  }
+
+  set buyHash(value: string) {
+    this.set("buyHash", Value.fromString(value));
+  }
+
+  get sellHash(): string {
+    let value = this.get("sellHash");
+    return value!.toString();
+  }
+
+  set sellHash(value: string) {
+    this.set("sellHash", Value.fromString(value));
+  }
+
+  get maker(): Bytes {
+    let value = this.get("maker");
+    return value!.toBytes();
+  }
+
+  set maker(value: Bytes) {
+    this.set("maker", Value.fromBytes(value));
+  }
+
+  get taker(): Bytes {
+    let value = this.get("taker");
+    return value!.toBytes();
+  }
+
+  set taker(value: Bytes) {
+    this.set("taker", Value.fromBytes(value));
+  }
+
+  get price(): BigInt {
+    let value = this.get("price");
+    return value!.toBigInt();
+  }
+
+  set price(value: BigInt) {
+    this.set("price", Value.fromBigInt(value));
+  }
+
+  get metadata(): Bytes {
+    let value = this.get("metadata");
+    return value!.toBytes();
+  }
+
+  set metadata(value: Bytes) {
+    this.set("metadata", Value.fromBytes(value));
+  }
+}
