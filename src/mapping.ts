@@ -8,7 +8,7 @@ import { Token, OrdersMatched } from "../generated/schema";
 
 export function handleOwnershipTransferred(event: OwnershipTransferredEvent): void {
   let token = Token.load(event.transaction.hash.toHex());
-  if (token == null) {
+  if (token === null) {
     token = new Token(event.transaction.hash.toHex());
     token.id = event.transaction.hash.toHex();
     token.blockNumber = event.block.number;
@@ -26,7 +26,7 @@ export function handleOwnershipTransferred(event: OwnershipTransferredEvent): vo
 
 export function handleOrdersMatched(event: OrdersMatchedEvent): void {
   let order = OrdersMatched.load(event.transaction.hash.toHex())
-  if (order == null) {
+  if (order === null) {
     order = new OrdersMatched(event.transaction.hash.toHex())
     order.id = event.transaction.hash.toHex()
     order.blockNumber = event.block.number
@@ -36,7 +36,7 @@ export function handleOrdersMatched(event: OrdersMatchedEvent): void {
     order.taker = event.params.taker
     order.price = event.params.price
     order.metadata = event.params.metadata
+    
+    order.save()
   }
-
-  order.save()
 }
