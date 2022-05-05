@@ -20,8 +20,8 @@ export function handleOwnershipTransferred(event: OwnershipTransferredEvent): vo
     // token.metadataURI = tokenContract.;
     // token.metadataURI = tokenContract.tokenMetadataURI(event.params.tokenId);
     // token.contentURI = tokenContract.tokenURI(event.params.tokenId);
+    token.save();
   }
-  token.save();
 }
 
 export function handleOrdersMatched(event: OrdersMatchedEvent): void {
@@ -36,7 +36,7 @@ export function handleOrdersMatched(event: OrdersMatchedEvent): void {
     order.taker = event.params.taker
     order.price = event.params.price
     order.metadata = event.params.metadata
-    
+
     order.save()
   }
 }
